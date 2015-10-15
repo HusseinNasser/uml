@@ -1,0 +1,43 @@
+import model.*;
+
+public class Controller {
+	private MemberRegister register;
+	
+	public Controller(MemberRegister reg) {
+		register = reg;
+	}
+	
+	public void registerMember(String n, String pin) {
+		register.addMember(n, pin);
+	}
+	
+	public void deleteMember(String id) {
+		int uid = this.stringIDtoIntID(id);
+		register.deleteMember(uid);
+	}
+	
+	public void updateMember(String id, String name, String pin) {
+		int uid = this.stringIDtoIntID(id);
+		register.updateMember(uid, name, pin);
+	}
+
+	public Member getMember(String id) {
+		int uid = this.stringIDtoIntID(id);
+		return register.getMember(uid);
+	}
+	
+	public void addBoat(String id, String t, String l) {
+		int uid = this.stringIDtoIntID(id);
+		int tInt = -1;
+		double lD = -1;
+		try{
+			tInt = Integer.parseInt(t);
+			lD = Double.parseDouble(l);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("Invalid Numeric Input!");
+		}
+		
+		BoatType type = parseBoatType(tInt);
+		register.addBoat(uid, type, lD);
+	}
+	
